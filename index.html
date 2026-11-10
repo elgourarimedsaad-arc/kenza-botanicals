@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenza Botanicals | Soins Naturels du Maroc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ VARIABLES & RESET ============ */
+:root {
+    --bg: #F9F6F0;
+    --text: #2C3A30;
+    --text-light: #6B7B6E;
+    --primary: #1A3C34; /* Vert Foncé */
+    --accent: #D4AF37; /* Dhabbi */
+    --accent-hover: #B8962E;
+    --white: #FFFFFF;
+    --radius: 12px;
+    --shadow: 0 20px 40px rgba(26, 60, 52, 0.08);
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+h1, h2, h3, h4 { font-family: 'Cinzel', serif; font-weight: 600; color: var(--primary); }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; background: #e0e0e0; } /* Khalfiya ramadiya ila tsawra matl9atch */
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+.wrap { width: min(100% - 40px, 1200px); margin-inline: auto; }
+
+/* ============ NAVBAR ============ */
+header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 0; transition: all 0.4s var(--ease);
+    background: transparent;
+}
+header.scrolled {
+    padding: 12px 0; background: rgba(249, 246, 240, 0.95);
+    backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.logo-icon { width: 40px; height: 40px; color: var(--primary); transition: transform 0.3s; }
+.logo:hover .logo-icon { transform: rotate(15deg); }
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-text span:first-child { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
+.logo-text span:last-child { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-light); }
+header.scrolled .logo-text span:first-child { color: var(--primary); }
+
+.menu { display: flex; align-items: center; gap: 30px; }
+.menu a { font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; position: relative; color: var(--primary); transition: color 0.3s; }
+.menu a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s var(--ease); }
+.menu a:hover::after { width: 100%; }
+.menu a:hover { color: var(--accent); }
+
+.nav-actions { display: flex; align-items: center; gap: 20px; }
+.cart-btn { position: relative; color: var(--primary); transition: transform 0.3s; }
+.cart-btn:hover { transform: scale(1.1); color: var(--accent); }
+.cart-count {
+    position: absolute; top: -8px; right: -10px; background: var(--accent);
+    color: var(--white); font-size: 11px; font-weight: 700;
+    width: 20px; height: 20px; border-radius: 50%;
+    display: grid; place-items: center; transform: scale(0); transition: transform 0.3s var(--ease);
+}
+.cart-count.show { transform: scale(1); }
+
+.burger { display: none; flex-direction: column; gap: 5px; width: 30px; cursor: pointer; }
+.burger span { display: block; height: 2px; background: var(--primary); transition: 0.3s; }
+.burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============ HERO ============ */
+.hero {
+    height: 100vh; min-height: 600px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+}
+.hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+    transform: scale(1.05); transition: transform 10s ease-out;
+}
+.hero:hover .hero-bg { transform: scale(1); }
+.hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(26,60,52,0.4), rgba(26,60,52,0.7));
+}
+.hero-content { position: relative; z-index: 2; color: var(--white); max-width: 800px; padding: 0 20px; }
+.hero-tag { font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: block; font-weight: 600; }
+.hero h1 { font-size: clamp(3rem, 6vw, 5rem); color: var(--white); margin-bottom: 20px; line-height: 1.1; }
+.hero p { font-size: 1.1rem; font-weight: 300; margin-bottom: 40px; color: rgba(255,255,255,0.9); }
+.btn {
+    display: inline-block; padding: 16px 40px; font-size: 14px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 2px; color: var(--white);
+    background: var(--accent); border: 2px solid var(--accent);
+    transition: all 0.4s var(--ease); cursor: pointer;
+}
+.btn:hover { background: transparent; color: var(--accent); }
+.btn-outline { background: transparent; color: var(--white); border-color: var(--white); }
+.btn-outline:hover { background: var(--white); color: var(--primary); }
+
+/* ============ FEATURES ============ */
+.features { padding: 80px 0; background: var(--white); }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: center; }
+.feat-item svg { width: 40px; height: 40px; color: var(--accent); margin-bottom: 15px; }
+.feat-item h3 { font-size: 1.2rem; margin-bottom: 10px; font-family: 'Jost', sans-serif; font-weight: 600; }
+.feat-item p { font-size: 0.9rem; color: var(--text-light); }
+
+/* ============ PRODUCTS ============ */
+.products-section { padding: 100px 0; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header h2 { font-size: 2.5rem; margin-bottom: 15px; }
+.section-header p { color: var(--text-light); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+.grid-products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.product-card { background: var(--white); border-radius: var(--radius); overflow: hidden; transition: transform 0.4s var(--ease), box-shadow 0.4s; position: relative; }
+.product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+.prod-img { width: 100%; height: 300px; object-fit: cover; transition: transform 0.6s var(--ease); }
+.product-card:hover .prod-img { transform: scale(1.05); }
+.prod-info { padding: 25px; text-align: center; }
+.prod-info h3 { font-family: 'Jost', sans-serif; font-size: 1.1rem; font-weight: 500; margin-bottom: 5px; color: var(--text); }
+.prod-category { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; display: block; }
+.prod-price { font-weight: 600; font-size: 1.1rem; color: var(--primary); margin-bottom: 15px; }
+.add-btn {
+    width: 100%; padding: 12px; background: var(--primary); color: var(--white);
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+    border-radius: 4px; transition: background 0.3s, transform 0.3s;
+}
+.add-btn:hover { background: var(--accent); }
+.add-btn:active { transform: scale(0.98); }
+
+/* ============ ABOUT ============ */
+.about { padding: 100px 0; background: var(--white); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-img { position: relative; border-radius: var(--radius); overflow: hidden; height: 500px; }
+.about-img img { width: 100%; height: 100%; object-fit: cover; }
+.about-txt h2 { font-size: 2.5rem; margin-bottom: 20px; }
+.about-txt p { color: var(--text-light); margin-bottom: 20px; font-size: 1.05rem; }
+.about-txt .btn { margin-top: 10px; background: var(--primary); border-color: var(--primary); color: var(--white); }
+.about-txt .btn:hover { background: transparent; color: var(--primary); }
+
+/* ============ NEWSLETTER ============ */
+.newsletter { padding: 80px 0; background: var(--primary); text-align: center; color: var(--white); }
+.newsletter h2 { color: var(--white); font-size: 2.2rem; margin-bottom: 10px; }
+.newsletter p { color: rgba(255,255,255,0.7); margin-bottom: 30px; }
+.news-form { display: flex; max-width: 500px; margin: 0 auto; }
+.news-form input { flex: 1; padding: 16px 20px; border: none; outline: none; font-family: inherit; font-size: 15px; }
+.news-form button { padding: 16px 30px; background: var(--accent); color: var(--white); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s; }
+.news-form button:hover { background: var(--accent-hover); }
+
+/* ============ FOOTER ============ */
+footer { background: #11261F; color: rgba(255,255,255,0.6); padding: 60px 0 30px; font-size: 0.9rem; }
+.foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px; margin-bottom: 40px; }
+.foot-brand .logo-text span:first-child { color: var(--white); }
+.foot-brand p { margin: 20px 0; max-width: 300px; }
+.socials { display: flex; gap: 15px; }
+.socials a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); display: grid; place-items: center; transition: 0.3s; }
+.socials a:hover { background: var(--accent); border-color: var(--accent); color: var(--white); }
+.foot-col h4 { color: var(--white); font-family: 'Jost', sans-serif; font-size: 1.1rem; margin-bottom: 20px; }
+.foot-col ul { display: grid; gap: 10px; }
+.foot-col a:hover { color: var(--accent); }
+.foot-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 0.8rem; }
+
+/* ============ ANIMATIONS ============ */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 992px) {
+    .grid-products { grid-template-columns: repeat(2, 1fr); }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-img { height: 350px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+    .menu, .nav-actions .btn { display: none; }
+    .burger { display: flex; z-index: 102; }
+    .nav-actions { z-index: 102; }
+    .mobile-menu {
+        position: fixed; inset: 0; background: var(--bg); z-index: 101;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 30px; clip-path: circle(0% at 100% 0%); transition: clip-path 0.6s var(--ease);
+    }
+    .mobile-menu.open { clip-path: circle(150% at 100% 0%); }
+    .mobile-menu a { font-family: 'Cinzel', serif; font-size: 24px; color: var(--primary); }
+    .features-grid { grid-template-columns: 1fr; gap: 30px; }
+    .foot-grid { grid-template-columns: 1fr; text-align: center; }
+    .foot-brand p { margin: 20px auto; }
+    .socials { justify-content: center; }
+    .news-form { flex-direction: column; gap: 10px; }
+    .news-form input, .news-form button { width: 100%; }
+}
+@media (max-width: 480px) {
+    .grid-products { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header id="header">
+    <div class="wrap nav-inner">
+        <a href="#" class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                <path d="M12 6v12M12 18c-2.5-2.5-4-5-4-8 0-2 1.5-4 4-4s4 2 4 4c0 3-1.5 5.5-4 8z"/>
+            </svg>
+            <div class="logo-text">
+                <span>Kenza</span>
+                <span>Botanicals</span>
+            </div>
+        </a>
+        <nav class="menu">
+            <a href="#accueil">Accueil</a>
+            <a href="#boutique">Boutique</a>
+            <a href="#histoire">Notre Histoire</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <!-- Hada howa l-bouton dyal l-commande (l-karosa) -->
+            <button class="cart-btn" id="cartBtn" title="Commander via WhatsApp">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+            <div class="burger" id="burger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#accueil">Accueil</a>
+    <a href="#boutique">Boutique</a>
+    <a href="#histoire">Notre Histoire</a>
+    <a href="#contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="accueil">
+    <div class="hero-bg"></div>
+    <div class="hero-content reveal">
+        <span class="hero-tag">L'Art du Soin Naturel</span>
+        <h1>Révélez votre éclat<br>avec le Maroc</h1>
+        <p>Des soins authentiques, formulés à la main avec de l'huile d'argan pure, de l'eau de rose et du ghassoul.</p>
+        <a href="#boutique" class="btn">Découvrir la Collection</a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+    <div class="wrap features-grid">
+        <div class="feat-item reveal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            <h3>100% Naturel</h3>
+            <p>Sans parabènes ni sulfates. Ingrédients purs du Maroc.</p>
+        </div>
+        <div class="feat-item reveal" style="transition-delay: 0.1s;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <h3>Fait avec Amour</h3>
+            <p>Chaque flacon est préparé artisanalement.</p>
+        </div>
+        <div class="feat-item reveal" style="transition-delay: 0.2s;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <h3>Non Testé sur les Animaux</h3>
+            <p>Cruelty-Free certifié. Éthique et responsable.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="boutique">
+    <div class="wrap">
+        <div class="section-header reveal">
+            <h2>Nos Best-Sellers</h2>
+            <p>Découvrez nos soins les plus aimés, pour une peau éclatante et des cheveux soyeux.</p>
+        </div>
+        <div class="grid-products">
+            <!-- Product 1 -->
+            <div class="product-card reveal">
+                <!-- Beddelna l-image b wa7ed lien stable -->
+                <img src="https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Huile d'Argan Pure" class="prod-img">
+                <div class="prod-info">
+                    <span class="prod-category">Visage & Cheveux</span>
+                    <h3>Huile d'Argan Pure</h3>
+                    <div class="prod-price" data-price="250">250 DH</div>
+                    <button class="add-btn" data-name="Huile d'Argan" data-price="250">Ajouter au panier</button>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card reveal" style="transition-delay: 0.1s;">
+                <img src="https://images.pexels.com/photos/6621462/pexels-photo-6621462.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Eau de Rose" class="prod-img">
+                <div class="prod-info">
+                    <span class="prod-category">Tonique Visage</span>
+                    <h3>Eau de Rose Distillée</h3>
+                    <div class="prod-price" data-price="180">180 DH</div>
+                    <button class="add-btn" data-name="Eau de Rose" data-price="180">Ajouter au panier</button>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card reveal" style="transition-delay: 0.2s;">
+                <img src="https://images.pexels.com/photos/7263184/pexels-photo-7263184.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Masque Ghassoul" class="prod-img">
+                <div class="prod-info">
+                    <span class="prod-category">Soin Purifiant</span>
+                    <h3>Masque Ghassoul</h3>
+                    <div class="prod-price" data-price="150">150 DH</div>
+                    <button class="add-btn" data-name="Masque Ghassoul" data-price="150">Ajouter au panier</button>
+                </div>
+            </div>
+            <!-- Product 4 -->
+            <div class="product-card reveal" style="transition-delay: 0.3s;">
+                <img src="https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Savon Noir Beldi" class="prod-img">
+                <div class="prod-info">
+                    <span class="prod-category">Rituel Hammam</span>
+                    <h3>Savon Noir Beldi</h3>
+                    <div class="prod-price" data-price="120">120 DH</div>
+                    <button class="add-btn" data-name="Savon Noir" data-price="120">Ajouter au panier</button>
+                </div>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-card reveal" style="transition-delay: 0.4s;">
+                <img src="https://images.pexels.com/photos/4465831/pexels-photo-4465831.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sérum Safran" class="prod-img">
+                <div class="prod-info">
+                    <span class="prod-category">Anti-Âge</span>
+                    <h3>Sérum au Safran</h3>
+                    <div class="prod-price" data-price="320">320 DH</div>
+                    <button class="add-btn" data-name="Sérum Safran" data-price="320">Ajouter au panier</button>
+                </div>
+            </div>
+            <!-- Product 6 -->
+            <div class="product-card reveal" style="transition-delay: 0.5s;">
+                <img src="https://images.pexels.com/photos/6724396/pexels-photo-6724396.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Huile de Cactus" class="prod-img">
+                <div class="prod-info">
+                    <span class="prod-category">Soin Intense</span>
+                    <h3>Huile de Cactus</h3>
+                    <div class="prod-price" data-price="450">450 DH</div>
+                    <button class="add-btn" data-name="Huile de Cactus" data-price="450">Ajouter au panier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="histoire">
+    <div class="wrap about-grid">
+        <div class="about-img reveal">
+            <img src="https://images.pexels.com/photos/3762879/pexels-photo-3762879.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ingrédients naturels du Maroc">
+        </div>
+        <div class="about-txt reveal">
+            <h2>Notre Héritage</h2>
+            <p>Kenza Botanicals est née d'une passion pour les rituels de beauté ancestraux du Maroc. Nous croyons que la nature détient les secrets d'une peau saine et radieuse.</p>
+            <p>Nos ingrédients sont sourcés directement auprès de coopératives féminines locales, garantissant un commerce équitable et une qualité exceptionnelle.</p>
+            <a href="#contact" class="btn">En savoir plus</a>
+        </div>
+    </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="contact">
+    <div class="wrap reveal">
+        <h2>Rejoignez le Cercle Kenza</h2>
+        <p>Recevez 10% sur votre première commande et nos rituels de beauté exclusifs.</p>
+        <form class="news-form" id="newsForm">
+            <input type="email" placeholder="Votre adresse email" required>
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="wrap">
+        <div class="foot-grid">
+            <div class="foot-brand">
+                <a href="#" class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                        <path d="M12 6v12M12 18c-2.5-2.5-4-5-4-8 0-2 1.5-4 4-4s4 2 4 4c0 3-1.5 5.5-4 8z"/>
+                    </svg>
+                    <div class="logo-text">
+                        <span>Kenza</span>
+                        <span>Botanicals</span>
+                    </div>
+                </a>
+                <p>Des soins authentiques et naturels, inspirés par les rituels de beauté du Maroc.</p>
+                <div class="socials">
+                    <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor"/></svg></a>
+                    <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+                </div>
+            </div>
+            <div class="foot-col">
+                <h4>Boutique</h4>
+                <ul>
+                    <li><a href="#">Soins Visage</a></li>
+                    <li><a href="#">Soins Cheveux</a></li>
+                    <li><a href="#">Rituels Hammam</a></li>
+                    <li><a href="#">Coffrets Cadeaux</a></li>
+                </ul>
+            </div>
+            <div class="foot-col">
+                <h4>Aide</h4>
+                <ul>
+                    <li><a href="#">Livraison & Retours</a></li>
+                    <li><a href="#">Nous Contacter</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Politique de Confidentialité</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="foot-bottom">
+            <p>© 2026 Kenza Botanicals. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// 1. NAVBAR SCROLL
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// 2. MOBILE MENU
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+    });
+});
+
+// 3. REVEAL ANIMATIONS (Scroll)
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revealObs.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObs.observe(el));
+
+// 4. LOGIQUE DYAL L-PANIER & WHATSAPP
+let cart = []; // Hna fin kaytsjjlo les produits
+const cartBtn = document.getElementById('cartBtn');
+const cartCountEl = document.getElementById('cartCount');
+const addBtns = document.querySelectorAll('.add-btn');
+
+// Melli yklik 3la "Ajouter au panier"
+addBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name');
+        const price = parseInt(btn.getAttribute('data-price'));
+        
+        // Zid l-produit l l-liste
+        cart.push({ name: name, price: price });
+        
+        // Beddel l-raqm f l-karosa
+        cartCountEl.textContent = cart.length;
+        cartCountEl.classList.add('show');
+        
+        // Animation dyal l-bouton
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Ajouté !';
+        btn.style.background = '#1A3C34';
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 1500);
+    });
+});
+
+// Melli yklik 3la l-Karosa bach ycommander
+cartBtn.addEventListener('click', () => {
+    if (cart.length === 0) {
+        alert("Votre panier est vide ! Veuillez ajouter des produits.");
+        return;
+    }
+
+    // N9ado l-message dyal WhatsApp
+    let message = "Bonjour Kenza Botanicals ! 🌿\nJe souhaite passer commande :\n\n";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        message += `- ${item.name} : ${item.price} DH\n`;
+        total += item.price;
+    });
+
+    message += `\n*Total : ${total} DH*`;
+    
+    // Hna fin katbeddel NEMRA (bla 0 f l-lwel, w zid 212)
+    const phoneNumber = "212684987875"; 
+    
+    // Tfta7 WhatsApp
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+});
+
+// 5. NEWSLETTER FORM
+document.getElementById('newsForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const original = btn.textContent;
+    btn.textContent = 'Merci ! ✨';
+    btn.style.background = '#1A3C34';
+    e.target.reset();
+    setTimeout(() => {
+        btn.textContent = original;
+        btn.style.background = '';
+    }, 3000);
+});
+</script>
+</body>
+</html>
